@@ -110,7 +110,6 @@ class NotionHelper:
             # 检查子块的类型
             if self.first_block_id is None and child.get("type").startswith("heading"):
                 self.first_block_id = child.get("id")
-            print(child)
             if child["type"] == "child_database":
                 self.database_id_dict[child.get("child_database").get("title")] = (
                     child.get("id")
@@ -190,7 +189,7 @@ class NotionHelper:
 
     def update_heatmap(self, block_id, url):
         # 更新 image block 的链接
-        self.client.blocks.update(block_id=block_id, embed={"url": url})
+        return self.client.blocks.update(block_id=block_id, embed={"url": url})
 
     def get_week_relation_id(self, date):
         year = date.isocalendar().year
