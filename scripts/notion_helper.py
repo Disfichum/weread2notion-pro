@@ -108,14 +108,15 @@ class NotionHelper:
         # 遍历子块
         for child in children:
             # 检查子块的类型
-            if self.first_block_id == None:
+            if self.first_block_id is None:
+                print(f"first {child}")
                 self.first_block_id = child.get("id")
+            print(child)
             if child["type"] == "child_database":
                 self.database_id_dict[child.get("child_database").get("title")] = (
                     child.get("id")
                 )
             elif child["type"] == "embed" and child.get("url"):
-                print(child)
                 if child.get("url").startswith("https://heatmap.malinkang.com/"):
                     self.heatmap_block_id = child.get("id")
             # 如果子块有子块，递归调用函数
