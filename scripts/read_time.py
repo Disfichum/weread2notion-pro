@@ -63,9 +63,11 @@ if __name__ == "__main__":
         image_url=f"https://raw.githubusercontent.com/{os.getenv('REPOSITORY')}/{os.getenv('REF').split('/')[-1]}/OUT_FOLDER/{image_file}"
         heatmap_url = f"https://heatmap.malinkang.com/image={image_url}"
         if(notion_helper.heatmap_block_id):
-            notion_helper.update_heatmap(block_id=notion_helper.page_id,url=heatmap_url)
+            response = notion_helper.update_heatmap(block_id=notion_helper.page_id,url=heatmap_url)
+            print(f"update {response}")
         else:
-            notion_helper.append_blocks(block_id=notion_helper.page_id,children=[get_embed(heatmap_url)])
+            response = notion_helper.append_blocks(block_id=notion_helper.page_id,children=[get_embed(heatmap_url)])
+            print(f"add {response}")
     api_data = weread_api.get_api_data()
     readTimes = {int(key):value for key,value in api_data.get("readTimes").items()}
     now = pendulum.now('Asia/Shanghai').start_of('day')
