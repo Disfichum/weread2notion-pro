@@ -44,7 +44,8 @@ class NotionHelper:
         "READ_DATABASE_NAME": "阅读记录",
     }
     database_id_dict = {}
-    heatmap_block_id = {}
+    heatmap_block_id = None
+    first_block_id = None
 
     def __init__(self):
         self.client = Client(auth=os.getenv("NOTION_TOKEN"), log_level=logging.ERROR)
@@ -107,7 +108,8 @@ class NotionHelper:
         # 遍历子块
         for child in children:
             # 检查子块的类型
-
+            if self.first_block_id == None:
+                self.first_block_id = child.get("id")
             if child["type"] == "child_database":
                 self.database_id_dict[child.get("child_database").get("title")] = (
                     child.get("id")

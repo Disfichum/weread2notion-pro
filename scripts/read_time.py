@@ -61,12 +61,12 @@ if __name__ == "__main__":
     image_file = get_file()
     if image_file:
         image_url=f"https://raw.githubusercontent.com/{os.getenv('REPOSITORY')}/{os.getenv('REF').split('/')[-1]}/OUT_FOLDER/{image_file}"
-        heatmap_url = f"https://heatmap.malinkang.com/image={image_url}"
+        heatmap_url = f"https://heatmap.malinkang.com/?image={image_url}"
         if(notion_helper.heatmap_block_id):
             response = notion_helper.update_heatmap(block_id=notion_helper.page_id,url=heatmap_url)
             print(f"update {response}")
         else:
-            response = notion_helper.append_blocks(block_id=notion_helper.page_id,children=[get_embed(heatmap_url)])
+            response = notion_helper.append_blocks_after(block_id=notion_helper.page_id,children=[get_embed(heatmap_url)],after=notion_helper.first_block_id)
             print(f"add {response}")
     api_data = weread_api.get_api_data()
     readTimes = {int(key):value for key,value in api_data.get("readTimes").items()}
