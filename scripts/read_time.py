@@ -90,7 +90,7 @@ if __name__ == "__main__":
         heatmap_url = f"https://heatmap.malinkang.com/?image={image_url}"
         if notion_helper.heatmap_block_id:
             response = notion_helper.update_heatmap(
-                block_id=notion_helper.page_id, url=heatmap_url
+                block_id=notion_helper.heatmap_block_id, url=heatmap_url
             )
             print(f"update {response}")
         elif notion_helper.first_block_id:
